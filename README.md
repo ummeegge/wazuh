@@ -46,9 +46,12 @@ to install the Wazuh agent execute the install.sh script. After it is finished, 
 $ /etc/init.d/wazuh        
 Usage: /etc/init.d/wazuh {start|stop|restart|status|info}
 ```
-Before you start Wazuh, you need to configure it. The configuration file can be found under /var/ipfire/ossec/etc/ossec.conf. You need to add the IP address of the Wazuh server under the '<address>{ENTER_HERE_WAZUH_SERVER_IP}</address>' line.
+Before you start Wazuh, you need to configure it. The configuration file can be found under /var/ipfire/ossec/etc/ossec.conf. You need to add the IP address of the Wazuh server under the address line "<address>{ENTER_HERE_WAZUH_SERVER_IP}</address>".
 
-**Add agent key**
+##Configuration
+
+**Add agent key: **
+
 To building up an encrypted connection between the Wazuh agent on IPFire and the Wazuh server to transfer the data, a client key needs to be created on server side and imported to the agent. This can be done via the 'manage_agents' binary which can be found on IPFire agent under /var/ipfire/ossec/bin and on der Wazuh server under /var/ossec/bin . This process is quite simple and looks like this -->
 
 Wazuh server:
