@@ -1,0 +1,114 @@
+###############################################################################
+#                                                                             #
+# IPFire.org - A linux based firewall                                         #
+# Copyright (C) 2007-2023  IPFire Team  <info@ipfire.org>                     #
+#                                                                             #
+# This program is free software: you can redistribute it and/or modify        #
+# it under the terms of the GNU General Public License as published by        #
+# the Free Software Foundation, either version 3 of the License, or           #
+# (at your option) any later version.                                         #
+#                                                                             #
+# This program is distributed in the hope that it will be useful,             #
+# but WITHOUT ANY WARRANTY; without even the implied warranty of              #
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               #
+# GNU General Public License for more details.                                #
+#                                                                             #
+# You should have received a copy of the GNU General Public License           #
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.       #
+#                                                                             #
+###############################################################################
+
+###############################################################################
+# Definitions
+###############################################################################
+
+include Config
+
+SUMMARY    = A Security Information and Event Management (SIEM) solution
+
+VER        = 4.7.2
+
+THISAPP    = wazuh-$(VER)
+DL_FILE    = $(THISAPP).tar.gz
+DL_FROM    = $(URL_IPFIRE)
+DIR_APP    = $(DIR_SRC)/$(THISAPP)
+TARGET     = $(DIR_INFO)/$(THISAPP)
+PROG       = wazuh
+PAK_VER    = 1
+
+DEPS       =
+
+SERVICES   =
+
+###############################################################################
+# Top-level Rules
+###############################################################################
+
+objects = $(DL_FILE)
+
+$(DL_FILE) = $(DL_FROM)/$(DL_FILE)
+
+$(DL_FILE)_BLAKE2 = e32c14426567dc6d317821dfd974f07ac5ba88fcbd5d71441feb21580bb40fbdcf486c10bdb45eefe9d12162adfbf5c9576d1b6bf28a8a8c1c299c4d0d94e4d6
+
+install : $(TARGET)
+
+check : $(patsubst %,$(DIR_CHK)/%,$(objects))
+
+download :$(patsubst %,$(DIR_DL)/%,$(objects))
+
+b2 : $(subst %,%_BLAKE2,$(objects))
+
+dist:
+	@$(PAK)
+
+###############################################################################
+# Downloading, checking, b2sum
+###############################################################################
+
+$(patsubst %,$(DIR_CHK)/%,$(objects)) :
+	@$(CHECK)
+
+$(patsubst %,$(DIR_DL)/%,$(objects)) :
+	@$(LOAD)
+
+$(subst %,%_BLAKE2,$(objects)) :
+	@$(B2SUM)
+
+###############################################################################
+# Installation Details
+###############################################################################
+
+$(TARGET) : $(patsubst %,$(DIR_DL)/%,$(objects))
+	@$(PREBUILD)
+	@rm -rf $(DIR_APP) && cd $(DIR_SRC) && tar axf $(DIR_DL)/$(DL_FILE)
+	cd $(DIR_APP) && sed -i \
+		-e 's|# USER_NO_STOP="y"|USER_NO_STOP="y"|' \
+		-e 's|# USER_LANGUAGE="en"|USER_LANGUAGE="en"|' \
+		-e 's|#USER_DIR="/var/ossec"|USER_DIR="/var/ipfire/ossec"|' \
+		-e 's|#USER_DELETE_DIR="y"|USER_DELETE_DIR="y"|' \
+		-e 's|#USER_ENABLE_ACTIVE_RESPONSE="y"|USER_ENABLE_ACTIVE_RESPONSE="y"|' \
+		-e 's|#USER_ENABLE_SYSCHECK="y"|USER_ENABLE_SYSCHECK="y"|' \
+		-e 's|#USER_ENABLE_ROOTCHECK="y"|USER_ENABLE_ROOTCHECK="y"|' \
+		-e 's|#USER_ENABLE_OPENSCAP="y"|USER_ENABLE_OPENSCAP="n"|' \
+		-e 's|#USER_ENABLE_SYSCOLLECTOR="y"|USER_ENABLE_SYSCOLLECTOR="y"|' \
+		-e 's|#USER_ENABLE_AUTHD="y"|USER_ENABLE_AUTHD="y"|' \
+		-e 's|#USER_GENERATE_AUTHD_CERT="y"|USER_GENERATE_AUTHD_CERT="y"|' \
+		-e 's|#USER_UPDATE="y"|USER_UPDATE="n"|' \
+		-e 's|#USER_BINARYINSTALL="y"|USER_BINARYINSTALL="n"|' \
+		-e 's|# USER_AGENT_SERVER_IP="1.2.3.4"|USER_AGENT_SERVER_IP="{ENTER_HERE_WAZUH_SERVER_IP}"|' \
+		-e 's|#USER_CREATE_SSL_CERT="y"|USER_CREATE_SSL_CERT="n"|' \
+		-e 's|#USER_AGENT_CONFIG_PROFILE="generic"|USER_AGENT_CONFIG_PROFILE="IPFIre Wazuh Agent|' \
+		-e 's|#USER_WHITE_LIST="192.168.2.1 192.168.1.0/24"|USER_WHITE_LIST="{ENTER_WHITELISTED_IPs}"|' \
+		-e 's|#OPTIMIZE_CPYTHON="y"|OPTIMIZE_CPYTHON="y"|' \
+		-e 's|# INSTALL_API_DAEMON="y"|INSTALL_API_DAEMON="n"|' etc/preloaded-vars.conf
+
+	cd $(DIR_APP)/src && make deps
+	cd $(DIR_APP)/src && make TARGET=agent PREFIX=/var/ipfire $(MAKETUNING)
+	cd $(DIR_APP) && echo -ne "agent\n" | ./install.sh
+
+	# Install wazuh init script
+	install -v -m 754 $(DIR_SRC)/config/wazuh/wazuh_init /etc/rc.d/init.d/wazuh
+
+	@rm -rf $(DIR_APP)
+	@$(POSTBUILD)
+

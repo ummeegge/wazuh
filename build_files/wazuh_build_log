@@ -1,0 +1,986 @@
+Jan 29 17:47:53: Building wazuh wazuh-4.7.2.tar.gz checksum OK
++ cd /usr/src/lfs
++ make -f wazuh LFS_BASEDIR=/usr/src install
+====================================== Installing wazuh-4.7.2 ...
+Install started; saving file list to /usr/src/lsalr ...
+cd /usr/src/wazuh-4.7.2 && sed -i \
+	-e 's|# USER_NO_STOP="y"|USER_NO_STOP="y"|' \
+	-e 's|# USER_LANGUAGE="en"|USER_LANGUAGE="en"|' \
+	-e 's|#USER_DIR="/var/ossec"|USER_DIR="/var/ipfire/ossec"|' \
+	-e 's|#USER_DELETE_DIR="y"|USER_DELETE_DIR="y"|' \
+	-e 's|#USER_ENABLE_ACTIVE_RESPONSE="y"|USER_ENABLE_ACTIVE_RESPONSE="y"|' \
+	-e 's|#USER_ENABLE_SYSCHECK="y"|USER_ENABLE_SYSCHECK="y"|' \
+	-e 's|#USER_ENABLE_ROOTCHECK="y"|USER_ENABLE_ROOTCHECK="y"|' \
+	-e 's|#USER_ENABLE_OPENSCAP="y"|USER_ENABLE_OPENSCAP="n"|' \
+	-e 's|#USER_ENABLE_SYSCOLLECTOR="y"|USER_ENABLE_SYSCOLLECTOR="y"|' \
+	-e 's|#USER_ENABLE_AUTHD="y"|USER_ENABLE_AUTHD="y"|' \
+	-e 's|#USER_GENERATE_AUTHD_CERT="y"|USER_GENERATE_AUTHD_CERT="y"|' \
+	-e 's|#USER_UPDATE="y"|USER_UPDATE="n"|' \
+	-e 's|#USER_BINARYINSTALL="y"|USER_BINARYINSTALL="n"|' \
+	-e 's|# USER_AGENT_SERVER_IP="1.2.3.4"|USER_AGENT_SERVER_IP="192.168.75.4"|' \
+	-e 's|#USER_CREATE_SSL_CERT="y"|USER_CREATE_SSL_CERT="n"|' \
+	-e 's|#USER_AGENT_CONFIG_PROFILE="generic"|USER_AGENT_CONFIG_PROFILE="IPFIre Wazuh Agent|' \
+	-e 's|#USER_WHITE_LIST="192.168.2.1 192.168.1.0/24"|USER_WHITE_LIST="192.168.75.0/24"|' \
+	-e 's|#OPTIMIZE_CPYTHON="y"|OPTIMIZE_CPYTHON="y"|' \
+	-e 's|# INSTALL_API_DAEMON="y"|INSTALL_API_DAEMON="n"|' etc/preloaded-vars.conf
+cd /usr/src/wazuh-4.7.2/src && make deps
+make[1]: Entering directory '/usr/src/wazuh-4.7.2/src'
+Makefile:2515: warning: overriding recipe for target 'win32/ui_resource.o'
+Makefile:2455: warning: ignoring old recipe for target 'win32/ui_resource.o'
+Makefile:2518: warning: overriding recipe for target 'win32/auth_resource.o'
+Makefile:2458: warning: ignoring old recipe for target 'win32/auth_resource.o'
+curl -so external/cJSON.tar.gz https://packages.wazuh.com/deps/24/libraries/linux/amd64/cJSON.tar.gz || true
+cd external && test -e cJSON.tar.gz && gunzip cJSON.tar.gz || true
+cd external && test -e cJSON.tar && tar -xf cJSON.tar || true
+test -e external/cJSON.tar && rm external/cJSON.tar || true
+test -d external/cJSON ||\
+(curl -so external/cJSON.tar.gz https://packages.wazuh.com/deps/24/libraries/sources/cJSON.tar.gz &&\
+cd external && gunzip cJSON.tar.gz && tar -xf cJSON.tar && rm cJSON.tar)
+curl -so external/curl.tar.gz https://packages.wazuh.com/deps/24/libraries/linux/amd64/curl.tar.gz || true
+cd external && test -e curl.tar.gz && gunzip curl.tar.gz || true
+cd external && test -e curl.tar && tar -xf curl.tar || true
+test -e external/curl.tar && rm external/curl.tar || true
+test -d external/curl ||\
+(curl -so external/curl.tar.gz https://packages.wazuh.com/deps/24/libraries/sources/curl.tar.gz &&\
+cd external && gunzip curl.tar.gz && tar -xf curl.tar && rm curl.tar)
+curl -so external/libdb.tar.gz https://packages.wazuh.com/deps/24/libraries/linux/amd64/libdb.tar.gz || true
+cd external && test -e libdb.tar.gz && gunzip libdb.tar.gz || true
+cd external && test -e libdb.tar && tar -xf libdb.tar || true
+test -e external/libdb.tar && rm external/libdb.tar || true
+test -d external/libdb ||\
+(curl -so external/libdb.tar.gz https://packages.wazuh.com/deps/24/libraries/sources/libdb.tar.gz &&\
+cd external && gunzip libdb.tar.gz && tar -xf libdb.tar && rm libdb.tar)
+curl -so external/libffi.tar.gz https://packages.wazuh.com/deps/24/libraries/linux/amd64/libffi.tar.gz || true
+cd external && test -e libffi.tar.gz && gunzip libffi.tar.gz || true
+cd external && test -e libffi.tar && tar -xf libffi.tar || true
+test -e external/libffi.tar && rm external/libffi.tar || true
+test -d external/libffi ||\
+(curl -so external/libffi.tar.gz https://packages.wazuh.com/deps/24/libraries/sources/libffi.tar.gz &&\
+cd external && gunzip libffi.tar.gz && tar -xf libffi.tar && rm libffi.tar)
+curl -so external/libyaml.tar.gz https://packages.wazuh.com/deps/24/libraries/linux/amd64/libyaml.tar.gz || true
+cd external && test -e libyaml.tar.gz && gunzip libyaml.tar.gz || true
+cd external && test -e libyaml.tar && tar -xf libyaml.tar || true
+test -e external/libyaml.tar && rm external/libyaml.tar || true
+test -d external/libyaml ||\
+(curl -so external/libyaml.tar.gz https://packages.wazuh.com/deps/24/libraries/sources/libyaml.tar.gz &&\
+cd external && gunzip libyaml.tar.gz && tar -xf libyaml.tar && rm libyaml.tar)
+curl -so external/openssl.tar.gz https://packages.wazuh.com/deps/24/libraries/linux/amd64/openssl.tar.gz || true
+cd external && test -e openssl.tar.gz && gunzip openssl.tar.gz || true
+cd external && test -e openssl.tar && tar -xf openssl.tar || true
+test -e external/openssl.tar && rm external/openssl.tar || true
+test -d external/openssl ||\
+(curl -so external/openssl.tar.gz https://packages.wazuh.com/deps/24/libraries/sources/openssl.tar.gz &&\
+cd external && gunzip openssl.tar.gz && tar -xf openssl.tar && rm openssl.tar)
+curl -so external/procps.tar.gz https://packages.wazuh.com/deps/24/libraries/linux/amd64/procps.tar.gz || true
+cd external && test -e procps.tar.gz && gunzip procps.tar.gz || true
+cd external && test -e procps.tar && tar -xf procps.tar || true
+test -e external/procps.tar && rm external/procps.tar || true
+test -d external/procps ||\
+(curl -so external/procps.tar.gz https://packages.wazuh.com/deps/24/libraries/sources/procps.tar.gz &&\
+cd external && gunzip procps.tar.gz && tar -xf procps.tar && rm procps.tar)
+curl -so external/sqlite.tar.gz https://packages.wazuh.com/deps/24/libraries/linux/amd64/sqlite.tar.gz || true
+cd external && test -e sqlite.tar.gz && gunzip sqlite.tar.gz || true
+cd external && test -e sqlite.tar && tar -xf sqlite.tar || true
+test -e external/sqlite.tar && rm external/sqlite.tar || true
+test -d external/sqlite ||\
+(curl -so external/sqlite.tar.gz https://packages.wazuh.com/deps/24/libraries/sources/sqlite.tar.gz &&\
+cd external && gunzip sqlite.tar.gz && tar -xf sqlite.tar && rm sqlite.tar)
+curl -so external/zlib.tar.gz https://packages.wazuh.com/deps/24/libraries/linux/amd64/zlib.tar.gz || true
+cd external && test -e zlib.tar.gz && gunzip zlib.tar.gz || true
+cd external && test -e zlib.tar && tar -xf zlib.tar || true
+test -e external/zlib.tar && rm external/zlib.tar || true
+test -d external/zlib ||\
+(curl -so external/zlib.tar.gz https://packages.wazuh.com/deps/24/libraries/sources/zlib.tar.gz &&\
+cd external && gunzip zlib.tar.gz && tar -xf zlib.tar && rm zlib.tar)
+curl -so external/audit-userspace.tar.gz https://packages.wazuh.com/deps/24/libraries/linux/amd64/audit-userspace.tar.gz || true
+cd external && test -e audit-userspace.tar.gz && gunzip audit-userspace.tar.gz || true
+cd external && test -e audit-userspace.tar && tar -xf audit-userspace.tar || true
+test -e external/audit-userspace.tar && rm external/audit-userspace.tar || true
+test -d external/audit-userspace ||\
+(curl -so external/audit-userspace.tar.gz https://packages.wazuh.com/deps/24/libraries/sources/audit-userspace.tar.gz &&\
+cd external && gunzip audit-userspace.tar.gz && tar -xf audit-userspace.tar && rm audit-userspace.tar)
+curl -so external/msgpack.tar.gz https://packages.wazuh.com/deps/24/libraries/linux/amd64/msgpack.tar.gz || true
+cd external && test -e msgpack.tar.gz && gunzip msgpack.tar.gz || true
+cd external && test -e msgpack.tar && tar -xf msgpack.tar || true
+test -e external/msgpack.tar && rm external/msgpack.tar || true
+test -d external/msgpack ||\
+(curl -so external/msgpack.tar.gz https://packages.wazuh.com/deps/24/libraries/sources/msgpack.tar.gz &&\
+cd external && gunzip msgpack.tar.gz && tar -xf msgpack.tar && rm msgpack.tar)
+curl -so external/bzip2.tar.gz https://packages.wazuh.com/deps/24/libraries/linux/amd64/bzip2.tar.gz || true
+cd external && test -e bzip2.tar.gz && gunzip bzip2.tar.gz || true
+cd external && test -e bzip2.tar && tar -xf bzip2.tar || true
+test -e external/bzip2.tar && rm external/bzip2.tar || true
+test -d external/bzip2 ||\
+(curl -so external/bzip2.tar.gz https://packages.wazuh.com/deps/24/libraries/sources/bzip2.tar.gz &&\
+cd external && gunzip bzip2.tar.gz && tar -xf bzip2.tar && rm bzip2.tar)
+curl -so external/nlohmann.tar.gz https://packages.wazuh.com/deps/24/libraries/linux/amd64/nlohmann.tar.gz || true
+cd external && test -e nlohmann.tar.gz && gunzip nlohmann.tar.gz || true
+
+gzip: nlohmann.tar.gz: not in gzip format
+cd external && test -e nlohmann.tar && tar -xf nlohmann.tar || true
+test -e external/nlohmann.tar && rm external/nlohmann.tar || true
+test -d external/nlohmann ||\
+(curl -so external/nlohmann.tar.gz https://packages.wazuh.com/deps/24/libraries/sources/nlohmann.tar.gz &&\
+cd external && gunzip nlohmann.tar.gz && tar -xf nlohmann.tar && rm nlohmann.tar)
+curl -so external/googletest.tar.gz https://packages.wazuh.com/deps/24/libraries/linux/amd64/googletest.tar.gz || true
+cd external && test -e googletest.tar.gz && gunzip googletest.tar.gz || true
+cd external && test -e googletest.tar && tar -xf googletest.tar || true
+test -e external/googletest.tar && rm external/googletest.tar || true
+test -d external/googletest ||\
+(curl -so external/googletest.tar.gz https://packages.wazuh.com/deps/24/libraries/sources/googletest.tar.gz &&\
+cd external && gunzip googletest.tar.gz && tar -xf googletest.tar && rm googletest.tar)
+curl -so external/libpcre2.tar.gz https://packages.wazuh.com/deps/24/libraries/linux/amd64/libpcre2.tar.gz || true
+cd external && test -e libpcre2.tar.gz && gunzip libpcre2.tar.gz || true
+cd external && test -e libpcre2.tar && tar -xf libpcre2.tar || true
+test -e external/libpcre2.tar && rm external/libpcre2.tar || true
+test -d external/libpcre2 ||\
+(curl -so external/libpcre2.tar.gz https://packages.wazuh.com/deps/24/libraries/sources/libpcre2.tar.gz &&\
+cd external && gunzip libpcre2.tar.gz && tar -xf libpcre2.tar && rm libpcre2.tar)
+curl -so external/libplist.tar.gz https://packages.wazuh.com/deps/24/libraries/linux/amd64/libplist.tar.gz || true
+cd external && test -e libplist.tar.gz && gunzip libplist.tar.gz || true
+cd external && test -e libplist.tar && tar -xf libplist.tar || true
+test -e external/libplist.tar && rm external/libplist.tar || true
+test -d external/libplist ||\
+(curl -so external/libplist.tar.gz https://packages.wazuh.com/deps/24/libraries/sources/libplist.tar.gz &&\
+cd external && gunzip libplist.tar.gz && tar -xf libplist.tar && rm libplist.tar)
+curl -so external/pacman.tar.gz https://packages.wazuh.com/deps/24/libraries/linux/amd64/pacman.tar.gz || true
+cd external && test -e pacman.tar.gz && gunzip pacman.tar.gz || true
+cd external && test -e pacman.tar && tar -xf pacman.tar || true
+test -e external/pacman.tar && rm external/pacman.tar || true
+test -d external/pacman ||\
+(curl -so external/pacman.tar.gz https://packages.wazuh.com/deps/24/libraries/sources/pacman.tar.gz &&\
+cd external && gunzip pacman.tar.gz && tar -xf pacman.tar && rm pacman.tar)
+curl -so external/libarchive.tar.gz https://packages.wazuh.com/deps/24/libraries/linux/amd64/libarchive.tar.gz || true
+cd external && test -e libarchive.tar.gz && gunzip libarchive.tar.gz || true
+cd external && test -e libarchive.tar && tar -xf libarchive.tar || true
+test -e external/libarchive.tar && rm external/libarchive.tar || true
+test -d external/libarchive ||\
+(curl -so external/libarchive.tar.gz https://packages.wazuh.com/deps/24/libraries/sources/libarchive.tar.gz &&\
+cd external && gunzip libarchive.tar.gz && tar -xf libarchive.tar && rm libarchive.tar)
+curl -so external/popt.tar.gz https://packages.wazuh.com/deps/24/libraries/linux/amd64/popt.tar.gz || true
+cd external && test -e popt.tar.gz && gunzip popt.tar.gz || true
+cd external && test -e popt.tar && tar -xf popt.tar || true
+test -e external/popt.tar && rm external/popt.tar || true
+test -d external/popt ||\
+(curl -so external/popt.tar.gz https://packages.wazuh.com/deps/24/libraries/sources/popt.tar.gz &&\
+cd external && gunzip popt.tar.gz && tar -xf popt.tar && rm popt.tar)
+curl -so external/rpm.tar.gz https://packages.wazuh.com/deps/24/libraries/linux/amd64/rpm.tar.gz || true
+cd external && test -e rpm.tar.gz && gunzip rpm.tar.gz || true
+cd external && test -e rpm.tar && tar -xf rpm.tar || true
+test -e external/rpm.tar && rm external/rpm.tar || true
+test -d external/rpm ||\
+(curl -so external/rpm.tar.gz https://packages.wazuh.com/deps/24/libraries/sources/rpm.tar.gz &&\
+cd external && gunzip rpm.tar.gz && tar -xf rpm.tar && rm rpm.tar)
+curl -so external/cpython.tar.gz https://packages.wazuh.com/deps/24/libraries/linux/amd64/cpython.tar.gz || true
+cd external && test -e cpython.tar.gz && gunzip cpython.tar.gz || true
+test -e external/cpython.tar ||\
+(curl -so external/cpython.tar.gz https://packages.wazuh.com/deps/24/libraries/sources/cpython.tar.gz &&\
+cd external && gunzip cpython.tar.gz && tar -xf cpython.tar && rm cpython.tar)
+test -d external/cpython || (cd external && gzip cpython.tar)
+curl -so external/jemalloc.tar.gz https://packages.wazuh.com/deps/24/libraries/linux/amd64/jemalloc.tar.gz || true
+cd external && test -e jemalloc.tar.gz && gunzip jemalloc.tar.gz || true
+cd external && test -e jemalloc.tar && tar -xf jemalloc.tar || true
+test -e external/jemalloc.tar && rm external/jemalloc.tar || true
+test -d external/jemalloc ||\
+(curl -so external/jemalloc.tar.gz https://packages.wazuh.com/deps/24/libraries/sources/jemalloc.tar.gz &&\
+cd external && gunzip jemalloc.tar.gz && tar -xf jemalloc.tar && rm jemalloc.tar)
+make[1]: Leaving directory '/usr/src/wazuh-4.7.2/src'
+cd /usr/src/wazuh-4.7.2/src && make TARGET=agent PREFIX=/var/ipfire -j4
+make[1]: Entering directory '/usr/src/wazuh-4.7.2/src'
+Makefile:2515: warning: overriding recipe for target 'win32/ui_resource.o'
+Makefile:2455: warning: ignoring old recipe for target 'win32/ui_resource.o'
+Makefile:2518: warning: overriding recipe for target 'win32/auth_resource.o'
+Makefile:2458: warning: ignoring old recipe for target 'win32/auth_resource.o'
+cp /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64/libstdc++.so.6 libstdc++.so.6
+cp /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64/libgcc_s.so.1 libgcc_s.so.1
+strip -x libgcc_s.so.1
+strip -x libstdc++.so.6
+make build_sysinfo build_shared_modules build_syscollector
+make[2]: Entering directory '/usr/src/wazuh-4.7.2/src'
+Makefile:2515: warning: overriding recipe for target 'win32/ui_resource.o'
+Makefile:2455: warning: ignoring old recipe for target 'win32/ui_resource.o'
+Makefile:2518: warning: overriding recipe for target 'win32/auth_resource.o'
+Makefile:2458: warning: ignoring old recipe for target 'win32/auth_resource.o'
+    CC libwazuhext.so
+/usr/bin/ld: missing --end-group; added as last command line option
+cd data_provider/ && mkdir -p build && cd build && cmake     .. && make
+cd shared_modules/dbsync/ && mkdir -p build && cd build && cmake    .. && make
+-- The C compiler identification is GNU 13.2.0
+-- The C compiler identification is GNU 13.2.0
+-- The CXX compiler identification is GNU 13.2.0
+-- The CXX compiler identification is GNU 13.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /tools_x86_64/ccache/bin/cc - skipped
+-- Detecting C compile features
+-- Check for working C compiler: /tools_x86_64/ccache/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /tools_x86_64/ccache/bin/c++ - skipped
+-- Check for working CXX compiler: /tools_x86_64/ccache/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Detecting CXX compile features - done
+-- Performing Test HAS_OPTIONAL
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /usr/src/wazuh-4.7.2/src/shared_modules/dbsync/build
+make[3]: Entering directory '/usr/src/wazuh-4.7.2/src/shared_modules/dbsync/build'
+[ 20%] Building CXX object CMakeFiles/dbsync.dir/src/dbsyncPipelineFactory.cpp.o
+[ 20%] Building CXX object CMakeFiles/dbsync.dir/src/dbsync.cpp.o
+[ 30%] Building CXX object CMakeFiles/dbsync.dir/src/dbsync_implementation.cpp.o
+-- Performing Test HAS_OPTIONAL - Success
+-- Performing Test HAS_FILESYSTEM
+-- Performing Test HAS_FILESYSTEM - Success
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /usr/src/wazuh-4.7.2/src/data_provider/build
+make[3]: Entering directory '/usr/src/wazuh-4.7.2/src/data_provider/build'
+[  7%] Building CXX object CMakeFiles/sysinfo.dir/src/network/networkInterfaceLinux.cpp.o
+[ 40%] Building CXX object CMakeFiles/dbsync.dir/src/sqlite/sqlite_dbengine.cpp.o
+[ 50%] Building CXX object CMakeFiles/dbsync.dir/src/sqlite/sqlite_wrapper.cpp.o
+[ 14%] Building CXX object CMakeFiles/sysinfo.dir/src/osinfo/sysOsParsers.cpp.o
+[ 21%] Building CXX object CMakeFiles/sysinfo.dir/src/packages/packageLinuxParserApk.cpp.o
+[ 28%] Building CXX object CMakeFiles/sysinfo.dir/src/packages/packageLinuxParserDeb.cpp.o
+[ 35%] Building CXX object CMakeFiles/sysinfo.dir/src/packages/packageLinuxParserExtra.cpp.o
+[ 42%] Building CXX object CMakeFiles/sysinfo.dir/src/packages/packageLinuxParserRpm.cpp.o
+[ 60%] Linking CXX shared library lib/libdbsync.so
+[ 60%] Built target dbsync
+[ 70%] Building CXX object example/CMakeFiles/dbsync_example.dir/main.cpp.o
+[ 80%] Linking CXX executable ../bin/dbsync_example
+[ 80%] Built target dbsync_example
+[ 90%] Building CXX object testtool/CMakeFiles/dbsync_test_tool.dir/main.cpp.o
+[ 50%] Building CXX object CMakeFiles/sysinfo.dir/src/packages/packageLinuxParserRpmLegacy.cpp.o
+[ 57%] Building CXX object CMakeFiles/sysinfo.dir/src/packages/rpmPackageManager.cpp.o
+[ 64%] Building CXX object CMakeFiles/sysinfo.dir/src/sysInfoLinux.cpp.o
+[ 71%] Building CXX object CMakeFiles/sysinfo.dir/src/utilsWrapperLinux.cpp.o
+[ 78%] Building CXX object CMakeFiles/sysinfo.dir/src/sysInfo.cpp.o
+[100%] Linking CXX executable ../bin/dbsync_test_tool
+[100%] Built target dbsync_test_tool
+make[3]: Leaving directory '/usr/src/wazuh-4.7.2/src/shared_modules/dbsync/build'
+cd shared_modules/rsync/ && mkdir -p build && cd build && cmake     .. && make
+-- The C compiler identification is GNU 13.2.0
+-- The CXX compiler identification is GNU 13.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /tools_x86_64/ccache/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /tools_x86_64/ccache/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /usr/src/wazuh-4.7.2/src/shared_modules/rsync/build
+make[3]: Entering directory '/usr/src/wazuh-4.7.2/src/shared_modules/rsync/build'
+[ 25%] Building CXX object CMakeFiles/rsync.dir/src/rsyncImplementation.cpp.o
+[ 25%] Building CXX object CMakeFiles/rsync.dir/src/rsync.cpp.o
+[ 85%] Linking CXX shared library lib/libsysinfo.so
+[ 85%] Built target sysinfo
+[ 92%] Building CXX object testtool/CMakeFiles/sysinfo_test_tool.dir/main.cpp.o
+[ 37%] Linking CXX shared library lib/librsync.so
+[ 37%] Built target rsync
+[ 75%] Building CXX object testtool/CMakeFiles/rsync_test_tool.dir/agentEmulator.cpp.o
+[ 75%] Building CXX object testtool/CMakeFiles/rsync_test_tool.dir/oneTimeSync.cpp.o
+[ 75%] Building CXX object testtool/CMakeFiles/rsync_test_tool.dir/main.cpp.o
+[100%] Linking CXX executable ../bin/sysinfo_test_tool
+[100%] Built target sysinfo_test_tool
+make[3]: Leaving directory '/usr/src/wazuh-4.7.2/src/data_provider/build'
+[ 87%] Building CXX object testtool/CMakeFiles/rsync_test_tool.dir/managerEmulator.cpp.o
+[100%] Linking CXX executable ../bin/rsync_test_tool
+[100%] Built target rsync_test_tool
+make[3]: Leaving directory '/usr/src/wazuh-4.7.2/src/shared_modules/rsync/build'
+cd wazuh_modules/syscollector/ && mkdir -p build && cd build && cmake     .. && make
+-- The C compiler identification is GNU 13.2.0
+-- The CXX compiler identification is GNU 13.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /tools_x86_64/ccache/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /tools_x86_64/ccache/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /usr/src/wazuh-4.7.2/src/wazuh_modules/syscollector/build
+make[3]: Entering directory '/usr/src/wazuh-4.7.2/src/wazuh_modules/syscollector/build'
+[ 33%] Building CXX object CMakeFiles/syscollector.dir/src/syscollectorImp.cpp.o
+[ 33%] Building CXX object CMakeFiles/syscollector.dir/src/syscollector.cpp.o
+[ 50%] Building CXX object CMakeFiles/syscollector.dir/src/syscollectorNormalizer.cpp.o
+[ 66%] Linking CXX shared library lib/libsyscollector.so
+[ 66%] Built target syscollector
+[ 83%] Building CXX object testtool/CMakeFiles/syscollector_test_tool.dir/main.cpp.o
+[100%] Linking CXX executable ../bin/syscollector_test_tool
+[100%] Built target syscollector_test_tool
+make[3]: Leaving directory '/usr/src/wazuh-4.7.2/src/wazuh_modules/syscollector/build'
+make[2]: Leaving directory '/usr/src/wazuh-4.7.2/src'
+make wazuh-agentd agent-auth wazuh-logcollector wazuh-syscheckd wazuh-execd manage_agents active-responses wazuh-modulesd
+make[2]: Entering directory '/usr/src/wazuh-4.7.2/src'
+Makefile:2515: warning: overriding recipe for target 'win32/ui_resource.o'
+Makefile:2455: warning: ignoring old recipe for target 'win32/ui_resource.o'
+Makefile:2518: warning: overriding recipe for target 'win32/auth_resource.o'
+Makefile:2458: warning: ignoring old recipe for target 'win32/auth_resource.o'
+    CC client-agent/agcom.o
+    CC client-agent/agentd.o
+    CC client-agent/buffer.o
+    CC client-agent/config.o
+    CC client-agent/event-forward.o
+    CC client-agent/main.o
+    CC client-agent/notify.o
+    CC client-agent/receiver.o
+    CC client-agent/request.o
+    CC client-agent/restart_agent.o
+    CC client-agent/rotate_log.o
+client-agent/receiver.c: In function 'receive_msg':
+client-agent/receiver.c:280:81: warning: passing argument 4 of 'UnmergeFiles' from incompatible pointer type [-Wincompatible-pointer-types]
+  280 |                                 if (!UnmergeFiles(file, SHAREDCFG_DIR, OS_TEXT, &ignore_list)) {
+      |                                                                                 ^~~~~~~~~~~~
+      |                                                                                 |
+      |                                                                                 char ***
+In file included from ./headers/shared.h:256,
+                 from client-agent/receiver.c:11:
+./headers/file_op.h:221:85: note: expected 'const char ***' but argument is of type 'char ***'
+  221 | int UnmergeFiles(const char *finalpath, const char *optdir, int mode, const char ***unmerged_files) __attribute__((nonnull(1)));
+      |                                                                       ~~~~~~~~~~~~~~^~~~~~~~~~~~~~
+client-agent/receiver.c:287:72: warning: passing argument 2 of 'cldir_ex_ignore' from incompatible pointer type [-Wincompatible-pointer-types]
+  287 |                                     if (cldir_ex_ignore(SHAREDCFG_DIR, ignore_list)) {
+      |                                                                        ^~~~~~~~~~~
+      |                                                                        |
+      |                                                                        char **
+./headers/file_op.h:346:54: note: expected 'const char **' but argument is of type 'char **'
+  346 | int cldir_ex_ignore(const char * name, const char ** ignore);
+      |                                        ~~~~~~~~~~~~~~^~~~~~
+    CC client-agent/sendmsg.o
+    CC client-agent/start_agent.o
+    CC client-agent/state.o
+    CC monitord/rotate_log.o
+    CC monitord/compress_log.o
+    CC config/active-response.o
+    CC config/agentlessd-config.o
+    CC config/alerts-config.o
+    CC config/authd-config.o
+    CC config/authd-key-request-config.o
+    CC config/buffer-config.o
+    CC config/client-config.o
+    CC config/cluster-config.o
+    CC config/config.o
+    CC config/csyslogd-config.o
+    CC config/dbd-config.o
+    CC config/email-alerts-config.o
+    CC config/global-config.o
+    CC config/integrator-config.o
+    CC config/labels-config.o
+    CC config/localfile-config.o
+    CC config/logtest-config.o
+    CC config/remote-config.o
+config/global-config.c: In function 'Read_Global':
+config/global-config.c:160:17: warning: unused variable 'xml_limits' [-Wunused-variable]
+  160 |     const char *xml_limits = "limits";
+      |                 ^~~~~~~~~~
+config/global-config.c:125:31: warning: unused parameter 'xml' [-Wunused-parameter]
+  125 | int Read_Global(const OS_XML *xml, XML_NODE node, void *configp, void *mailp)
+      |                 ~~~~~~~~~~~~~~^~~
+    CC config/reports-config.o
+    CC config/rootcheck-config.o
+    CC config/rules-config.o
+    CC config/socket-config.o
+    CC config/syscheck-config.o
+    CC config/wazuh_db-config.o
+    CC config/wmodules-agent-upgrade.o
+    CC config/wmodules-aws.o
+    CC config/wmodules-azure.o
+    CC config/wmodules-ciscat.o
+    CC config/wmodules-command.o
+    CC config/wmodules-config.o
+    CC config/wmodules-docker.o
+    CC config/wmodules-fluent.o
+    CC config/wmodules-gcp.o
+    CC config/wmodules-github.o
+    CC config/wmodules-key-request.o
+    CC config/wmodules-ms-graph.o
+    CC config/wmodules-office365.o
+    CC config/wmodules-oscap.o
+    CC config/wmodules-osquery-monitor.o
+    CC config/wmodules-sca.o
+    CC config/wmodules-syscollector.o
+    CC config/wmodules-task-manager.o
+    CC config/wmodules-vuln-detector.o
+    CC wazuh_modules/wm_aws.o
+    CC wazuh_modules/wm_azure.o
+    CC wazuh_modules/wm_ciscat.o
+    CC wazuh_modules/wm_command.o
+    CC wazuh_modules/wm_control.o
+    CC wazuh_modules/wm_database.o
+    CC wazuh_modules/wm_docker.o
+    CC wazuh_modules/wm_download.o
+    CC wazuh_modules/wm_exec.o
+    CC wazuh_modules/wm_fluent.o
+    CC wazuh_modules/wm_gcp.o
+    CC wazuh_modules/wm_github.o
+    CC wazuh_modules/wm_ms_graph.o
+    CC wazuh_modules/wm_office365.o
+    CC wazuh_modules/wm_oscap.o
+    CC wazuh_modules/wm_osquery_monitor.o
+    CC wazuh_modules/wm_sca.o
+    CC wazuh_modules/wm_syscollector.o
+    CC wazuh_modules/wm_task_general.o
+    CC wazuh_modules/wmcom.o
+    CC wazuh_modules/wmodules.o
+    CC wazuh_modules/agent_upgrade/wm_agent_upgrade.o
+    CC wazuh_modules/agent_upgrade/agent/wm_agent_upgrade_agent.o
+    CC wazuh_modules/agent_upgrade/agent/wm_agent_upgrade_com.o
+    CC wazuh_db/wdb.o
+    CC wazuh_db/wdb_agents.o
+    CC wazuh_db/wdb_ciscat.o
+    CC wazuh_db/wdb_com.o
+    CC wazuh_db/wdb_delta_event.o
+    CC wazuh_db/wdb_fim.o
+    CC wazuh_db/wdb_global.o
+    CC wazuh_db/wdb_integrity.o
+    CC wazuh_db/wdb_metadata.o
+    CC wazuh_db/wdb_parser.o
+    CC wazuh_db/wdb_rootcheck.o
+wazuh_db/wdb_integrity.c: In function 'wdbi_query_clear':
+wazuh_db/wdb_integrity.c:525:5: warning: 'wdbi_update_completion' accessing 41 bytes in a region of size 1 [-Wstringop-overflow=]
+  525 |     wdbi_update_completion(wdb, component, timestamp, "", "");
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+wazuh_db/wdb_integrity.c:525:5: note: referencing argument 4 of type 'char[41]'
+wazuh_db/wdb_integrity.c:525:5: warning: 'wdbi_update_completion' accessing 41 bytes in a region of size 1 [-Wstringop-overflow=]
+wazuh_db/wdb_integrity.c:525:5: note: referencing argument 5 of type 'char[41]'
+wazuh_db/wdb_integrity.c:341:6: note: in a call to function 'wdbi_update_completion'
+  341 | void wdbi_update_completion(wdb_t * wdb, wdb_component_t component, long timestamp, os_sha1 last_agent_checksum, os_sha1 manager_checksum) {
+      |      ^~~~~~~~~~~~~~~~~~~~~~
+wazuh_db/wdb_integrity.c: In function 'wdbi_query_checksum':
+wazuh_db/wdb_integrity.c:456:13: warning: 'wdbi_update_attempt' accessing 41 bytes in a region of size 1 [-Wstringop-overflow=]
+  456 |             wdbi_update_attempt(wdb, component, timestamp, checksum, "", FALSE);
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+wazuh_db/wdb_integrity.c:456:13: note: referencing argument 5 of type 'char[41]'
+wazuh_db/wdb_integrity.c:322:6: note: in a call to function 'wdbi_update_attempt'
+  322 | void wdbi_update_attempt(wdb_t * wdb, wdb_component_t component, long timestamp, os_sha1 last_agent_checksum, os_sha1 manager_checksum, bool legacy) {
+      |      ^~~~~~~~~~~~~~~~~~~
+wazuh_db/wdb_integrity.c: In function 'wdbi_get_last_manager_checksum':
+wazuh_db/wdb_integrity.c:552:9: warning: '__builtin_strncpy' specified bound 41 equals destination size [-Wstringop-truncation]
+  552 |         strncpy(manager_checksum, cJSON_GetStringValue(j_last_checksum), sizeof(os_sha1));
+      |         ^
+    CC wazuh_db/wdb_sca.o
+    CC wazuh_db/wdb_scan_info.o
+    CC wazuh_db/wdb_state.o
+    CC wazuh_db/wdb_syscollector.o
+    CC wazuh_db/wdb_task.o
+    CC wazuh_db/wdb_upgrade.o
+    CC wazuh_db/helpers/wdb_agents_helpers.o
+    CC wazuh_db/helpers/wdb_global_helpers.o
+    CC wazuh_db/schema_agents.o
+    CC wazuh_db/schema_global.o
+    CC wazuh_db/schema_global_upgrade_v1.o
+    CC wazuh_db/schema_global_upgrade_v2.o
+    CC wazuh_db/schema_global_upgrade_v3.o
+    CC wazuh_db/schema_global_upgrade_v4.o
+    CC wazuh_db/schema_global_upgrade_v5.o
+    CC wazuh_db/schema_task_manager.o
+    CC wazuh_db/schema_upgrade_v1.o
+    CC wazuh_db/schema_upgrade_v10.o
+    CC wazuh_db/schema_upgrade_v11.o
+    CC wazuh_db/schema_upgrade_v12.o
+    CC wazuh_db/schema_upgrade_v2.o
+    CC wazuh_db/schema_upgrade_v3.o
+    CC wazuh_db/schema_upgrade_v4.o
+    CC wazuh_db/schema_upgrade_v5.o
+    CC wazuh_db/schema_upgrade_v7.o
+    CC wazuh_db/schema_upgrade_v6.o
+    CC wazuh_db/schema_upgrade_v8.o
+    CC wazuh_db/schema_upgrade_v9.o
+    CC wazuh_db/schema_vuln_detector.o
+    CC os_crypto/blowfish/bf_op.o
+    CC os_crypto/md5/md5_op.o
+wazuh_db/wdb_parser.c: In function 'wdb_parse_packages':
+wazuh_db/wdb_parser.c:4158:13: warning: 'wdbi_update_attempt' accessing 41 bytes in a region of size 1 [-Wstringop-overflow=]
+ 4158 |             wdbi_update_attempt(wdb, WDB_SYSCOLLECTOR_PACKAGES, (unsigned)time(NULL), "", "", TRUE);
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+wazuh_db/wdb_parser.c:4158:13: note: referencing argument 4 of type 'char[41]'
+wazuh_db/wdb_parser.c:4158:13: warning: 'wdbi_update_attempt' accessing 41 bytes in a region of size 1 [-Wstringop-overflow=]
+wazuh_db/wdb_parser.c:4158:13: note: referencing argument 5 of type 'char[41]'
+In file included from wazuh_db/wdb_parser.c:13:
+wazuh_db/wdb.h:1547:6: note: in a call to function 'wdbi_update_attempt'
+ 1547 | void wdbi_update_attempt(wdb_t * wdb, wdb_component_t component, long timestamp, os_sha1 last_agent_checksum, os_sha1 manager_checksum, bool legacy);
+      |      ^~~~~~~~~~~~~~~~~~~
+wazuh_db/wdb_parser.c:4179:13: warning: 'wdbi_update_completion' accessing 41 bytes in a region of size 1 [-Wstringop-overflow=]
+ 4179 |             wdbi_update_completion(wdb, WDB_SYSCOLLECTOR_PACKAGES, (unsigned)time(NULL), "", "");
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+wazuh_db/wdb_parser.c:4179:13: note: referencing argument 4 of type 'char[41]'
+wazuh_db/wdb_parser.c:4179:13: warning: 'wdbi_update_completion' accessing 41 bytes in a region of size 1 [-Wstringop-overflow=]
+wazuh_db/wdb_parser.c:4179:13: note: referencing argument 5 of type 'char[41]'
+wazuh_db/wdb.h:1560:6: note: in a call to function 'wdbi_update_completion'
+ 1560 | void wdbi_update_completion(wdb_t * wdb, wdb_component_t component, long timestamp, os_sha1 last_agent_checksum, os_sha1 manager_checksum);
+      |      ^~~~~~~~~~~~~~~~~~~~~~
+wazuh_db/wdb_parser.c: In function 'wdb_parse_hotfixes':
+wazuh_db/wdb_parser.c:4259:13: warning: 'wdbi_update_attempt' accessing 41 bytes in a region of size 1 [-Wstringop-overflow=]
+ 4259 |             wdbi_update_attempt(wdb, WDB_SYSCOLLECTOR_HOTFIXES, (unsigned)time(NULL), "", "", TRUE);
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+wazuh_db/wdb_parser.c:4259:13: note: referencing argument 4 of type 'char[41]'
+wazuh_db/wdb_parser.c:4259:13: warning: 'wdbi_update_attempt' accessing 41 bytes in a region of size 1 [-Wstringop-overflow=]
+wazuh_db/wdb_parser.c:4259:13: note: referencing argument 5 of type 'char[41]'
+wazuh_db/wdb.h:1547:6: note: in a call to function 'wdbi_update_attempt'
+ 1547 | void wdbi_update_attempt(wdb_t * wdb, wdb_component_t component, long timestamp, os_sha1 last_agent_checksum, os_sha1 manager_checksum, bool legacy);
+      |      ^~~~~~~~~~~~~~~~~~~
+wazuh_db/wdb_parser.c:4275:13: warning: 'wdbi_update_completion' accessing 41 bytes in a region of size 1 [-Wstringop-overflow=]
+ 4275 |             wdbi_update_completion(wdb, WDB_SYSCOLLECTOR_HOTFIXES, (unsigned)time(NULL), "", "");
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+wazuh_db/wdb_parser.c:4275:13: note: referencing argument 4 of type 'char[41]'
+wazuh_db/wdb_parser.c:4275:13: warning: 'wdbi_update_completion' accessing 41 bytes in a region of size 1 [-Wstringop-overflow=]
+wazuh_db/wdb_parser.c:4275:13: note: referencing argument 5 of type 'char[41]'
+wazuh_db/wdb.h:1560:6: note: in a call to function 'wdbi_update_completion'
+ 1560 | void wdbi_update_completion(wdb_t * wdb, wdb_component_t component, long timestamp, os_sha1 last_agent_checksum, os_sha1 manager_checksum);
+      |      ^~~~~~~~~~~~~~~~~~~~~~
+    CC os_crypto/sha1/sha1_op.o
+    CC os_crypto/shared/keys.o
+    CC os_crypto/shared/msgs.o
+    CC os_crypto/md5_sha1/md5_sha1_op.o
+    CC os_crypto/md5_sha1_sha256/md5_sha1_sha256_op.o
+    CC os_crypto/sha256/sha256_op.o
+    CC os_crypto/sha512/sha512_op.o
+    CC os_crypto/aes/aes_op.o
+    CC os_crypto/hmac/hmac.o
+    CC os_crypto/signature/signature.o
+os_crypto/md5_sha1_sha256/md5_sha1_sha256_op.c: In function 'OS_MD5_SHA1_SHA256_File':
+os_crypto/md5_sha1_sha256/md5_sha1_sha256_op.c:130:9: warning: 'wfd' may be used uninitialized [-Wmaybe-uninitialized]
+  130 |         wpclose(wfd);
+      |         ^~~~~~~~~~~~
+os_crypto/md5_sha1_sha256/md5_sha1_sha256_op.c:31:12: note: 'wfd' was declared here
+   31 |     wfd_t *wfd;
+      |            ^~~
+    CC shared/agent_op.o
+    CC shared/atomic.o
+    CC shared/audit_op.o
+    CC shared/auth_client.o
+    CC shared/b64.o
+    CC shared/bqueue_op.o
+    CC shared/buffer_op.o
+    CC shared/bzip2_op.o
+    CC shared/cluster_utils.o
+    CC shared/cryptography.o
+    CC shared/custom_output_search_replace.o
+    CC shared/debug_op.o
+    CC shared/dll_load_notify.o
+    CC shared/enrollment_op.o
+    CC shared/exec_op.o
+    CC shared/expression.o
+    CC shared/file-queue.o
+    CC shared/file_op.o
+    CC shared/fs_op.o
+    CC shared/hash_op.o
+    CC shared/help.o
+    CC shared/integrity_op.o
+    CC shared/json-queue.o
+    CC shared/json_op.o
+    CC shared/labels_op.o
+    CC shared/list_op.o
+    CC shared/log_builder.o
+    CC shared/logging_helper.o
+    CC shared/math_op.o
+    CC shared/mem_op.o
+    CC shared/mq_op.o
+    CC shared/notify_op.o
+    CC shared/os_utils.o
+    CC shared/privsep_op.o
+    CC shared/pthreads_op.o
+    CC shared/queue_linked_op.o
+    CC shared/queue_op.o
+    CC shared/randombytes.o
+    CC shared/rbtree_op.o
+    CC shared/read-agents.o
+    CC shared/read-alert.o
+    CC shared/regex_op.o
+    CC shared/remoted_op.o
+    CC shared/report_op.o
+    CC shared/request_op.o
+    CC shared/rootcheck_op.o
+    CC shared/rules_op.o
+    CC shared/rwlock_op.o
+    CC shared/schedule_scan.o
+    CC shared/sig_op.o
+    CC shared/store_op.o
+    CC shared/string_op.o
+    CC shared/sym_load.o
+    CC shared/syscheck_op.o
+    CC shared/sysinfo_utils.o
+    CC shared/time_op.o
+    CC shared/url.o
+    CC shared/utf8_op.o
+    CC shared/validate_op.o
+    CC shared/vector_op.o
+    CC shared/version_op.o
+    CC shared/wait_op.o
+    CC shared/wazuhdb_op.o
+    CC shared/yaml2json.o
+    CC os_net/os_net.o
+    CC os_regex/os_match.o
+    CC os_regex/os_match_compile.o
+    CC os_regex/os_match_execute.o
+    CC os_regex/os_match_free_pattern.o
+    CC os_regex/os_regex.o
+    CC os_regex/os_regex_compile.o
+    CC os_regex/os_regex_execute.o
+    CC os_regex/os_regex_free_pattern.o
+    CC os_regex/os_regex_maps.o
+    CC os_regex/os_regex_match.o
+    CC os_regex/os_regex_startswith.o
+    CC os_regex/os_regex_str.o
+    CC os_regex/os_regex_strbreak.o
+    CC os_xml/os_xml.o
+    CC os_xml/os_xml_access.o
+    CC os_xml/os_xml_node_access.o
+    CC os_xml/os_xml_variables.o
+    CC os_xml/os_xml_writer.o
+    CC os_zlib/os_zlib.o
+    CC os_auth/ssl.o
+    CC os_auth/check_cert.o
+    CC addagent/validate.o
+    CC analysisd/logmsg.o
+    CC os_auth/main-client.o
+    CC logcollector/config.o
+    CC logcollector/lccom.o
+    CC logcollector/logcollector.o
+    CC logcollector/macos_log.o
+    CC logcollector/main.o
+    CC logcollector/read_audit.o
+    CC logcollector/read_command.o
+    CC logcollector/read_djb_multilog.o
+    CC logcollector/read_fullcommand.o
+    CC logcollector/read_json.o
+    CC logcollector/read_macos.o
+    CC logcollector/read_mssql_log.o
+    CC logcollector/read_multiline.o
+    CC logcollector/read_multiline_regex.o
+    CC logcollector/read_mysql_log.o
+    CC logcollector/read_nmapg.o
+    CC logcollector/read_ossecalert.o
+    CC logcollector/read_postgresql_log.o
+    CC logcollector/read_snortfull.o
+    CC logcollector/read_syslog.o
+    CC logcollector/read_ucs2_be.o
+    CC logcollector/read_ucs2_le.o
+    CC logcollector/read_win_el.o
+    CC logcollector/read_win_event_channel.o
+    CC logcollector/state.o
+    CC rootcheck/check_open_ports.o
+    CC rootcheck/check_rc_dev.o
+    CC rootcheck/check_rc_files.o
+    CC rootcheck/check_rc_if.o
+    CC rootcheck/check_rc_pids.o
+    CC rootcheck/check_rc_policy.o
+    CC rootcheck/check_rc_ports.o
+    CC rootcheck/check_rc_readproc.o
+    CC rootcheck/check_rc_sys.o
+    CC rootcheck/check_rc_trojans.o
+    CC rootcheck/common.o
+    CC rootcheck/common_rcl.o
+    CC rootcheck/config.o
+    CC rootcheck/os_string.o
+    CC rootcheck/rootcheck.o
+    CC rootcheck/run_rk_check.o
+    CC rootcheck/unix-process.o
+    CC rootcheck/win-common.o
+    CC rootcheck/win-process.o
+cd shared_modules/dbsync/ && mkdir -p build && cd build && cmake    .. && make
+    CC os_execd/config.o
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /usr/src/wazuh-4.7.2/src/shared_modules/dbsync/build
+make[3]: Entering directory '/usr/src/wazuh-4.7.2/src/shared_modules/dbsync/build'
+    CC os_execd/exec.o
+[ 60%] Built target dbsync
+[ 80%] Built target dbsync_example
+[100%] Built target dbsync_test_tool
+make[3]: Leaving directory '/usr/src/wazuh-4.7.2/src/shared_modules/dbsync/build'
+cd shared_modules/rsync/ && mkdir -p build && cd build && cmake     .. && make
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /usr/src/wazuh-4.7.2/src/shared_modules/rsync/build
+make[3]: Entering directory '/usr/src/wazuh-4.7.2/src/shared_modules/rsync/build'
+    CC os_execd/execd.o
+[ 37%] Built target rsync
+[100%] Built target rsync_test_tool
+make[3]: Leaving directory '/usr/src/wazuh-4.7.2/src/shared_modules/rsync/build'
+    CC os_execd/main.o
+    CC os_execd/wcom.o
+In file included from /usr/include/stdio.h:964,
+                 from ./headers/shared.h:64,
+                 from os_execd/exec.c:11:
+In function 'snprintf',
+    inlined from 'ReadExecConfig' at os_execd/exec.c:130:21:
+/usr/include/bits/stdio2.h:54:10: warning: '__builtin_snprintf' argument 4 may overlap destination object 'exec_cmd' [-Wrestrict]
+   54 |   return __builtin___snprintf_chk (__s, __n, __USE_FORTIFY_LEVEL - 1,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   55 |                                    __glibc_objsize (__s), __fmt,
+      |                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   56 |                                    __va_arg_pack ());
+      |                                    ~~~~~~~~~~~~~~~~~
+os_execd/exec.c: In function 'ReadExecConfig':
+os_execd/exec.c:16:13: note: destination object referenced by 'restrict'-qualified argument 1 was declared here
+   16 | static char exec_cmd[MAX_AR + 1][OS_FLSIZE + 1];
+      |             ^~~~~~~~
+    CC active-response/active_responses.o
+    CC addagent/main.o
+    CC addagent/manage_agents.o
+    CC addagent/manage_keys.o
+    CC addagent/read_from_user.o
+    CC active-response/firewalls/default-firewall-drop.o
+    CC shared/file_op_proc.o
+    CC shared/debug_op_proc.o
+    CC active-response/firewalls/pf.o
+    CC active-response/firewalls/npf.o
+    CC active-response/firewalls/ipfw.o
+    CC active-response/firewalld-drop.o
+    CC active-response/disable-account.o
+    CC active-response/host-deny.o
+    CC active-response/ip-customblock.o
+    CC active-response/restart-wazuh.o
+    CC active-response/route-null.o
+    CC active-response/kaspersky.o
+    CC active-response/wazuh-slack.o
+    CC wazuh_modules/main.o
+    LINK libwazuh.a
+    LINK librootcheck.a
+    RANLIB librootcheck.a
+    RANLIB libwazuh.a
+    CC libwazuhshared.so
+/usr/bin/ld: missing --end-group; added as last command line option
+    CC wazuh-agentd
+    CC agent-auth
+    CC wazuh-logcollector
+cd syscheckd && mkdir -p build && cd build && cmake  -DCMAKE_C_FLAGS="-DOSSECHIDS -DUSER=\"wazuh\" -DGROUPGLOBAL=\"wazuh\" -DLinux -DINOTIFY_ENABLED -D_XOPEN_SOURCE=600 -D_GNU_SOURCE -DIMAGE_TRUST_CHECKS=1 -DCA_NAME='DigiCert Assured ID Root CA' -DENABLE_SYSC -DENABLE_CISCAT -DENABLE_AUDIT -DCLIENT -pipe -Wall -Wextra -std=gnu99"   .. && make
+    CC wazuh-execd
+    CC manage_agents
+    CC default-firewall-drop
+    CC pf
+    CC npf
+    CC ipfw
+    CC firewalld-drop
+    CC disable-account
+    CC host-deny
+    CC ip-customblock
+    CC restart-wazuh
+    CC route-null
+-- The C compiler identification is GNU 13.2.0
+    CC kaspersky
+    CC wazuh-slack
+    CC wazuh-modulesd
+-- The CXX compiler identification is GNU 13.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /tools_x86_64/ccache/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /tools_x86_64/ccache/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /usr/src/wazuh-4.7.2/src/syscheckd/build
+make[3]: Entering directory '/usr/src/wazuh-4.7.2/src/syscheckd/build'
+[  8%] Building CXX object src/db/CMakeFiles/fimdb.dir/src/dbFileItem.cpp.o
+[  8%] Building CXX object src/db/CMakeFiles/fimdb.dir/src/db.cpp.o
+[ 16%] Building CXX object src/db/CMakeFiles/fimdb.dir/src/dbRegistryValue.cpp.o
+[ 12%] Building CXX object src/db/CMakeFiles/fimdb.dir/src/dbRegistryKey.cpp.o
+[ 20%] Building CXX object src/db/CMakeFiles/fimdb.dir/src/file.cpp.o
+[ 24%] Building CXX object src/db/CMakeFiles/fimdb.dir/src/fimDB.cpp.o
+[ 28%] Linking CXX shared library ../../lib/libfimdb.so
+[ 28%] Built target fimdb
+[ 32%] Building CXX object src/db/testtool/CMakeFiles/fimdb_test_tool.dir/main.cpp.o
+[ 40%] Building C object CMakeFiles/wazuh-syscheckd.dir/src/create_db.c.o
+[ 36%] Building C object CMakeFiles/wazuh-syscheckd.dir/src/config.c.o
+[ 44%] Building C object CMakeFiles/wazuh-syscheckd.dir/src/fim_diff_changes.c.o
+[ 48%] Building C object CMakeFiles/wazuh-syscheckd.dir/src/main.c.o
+[ 52%] Building C object CMakeFiles/wazuh-syscheckd.dir/src/registry/events.c.o
+[ 56%] Building C object CMakeFiles/wazuh-syscheckd.dir/src/registry/registry.c.o
+[ 60%] Building C object CMakeFiles/wazuh-syscheckd.dir/src/run_check.c.o
+/usr/src/wazuh-4.7.2/src/syscheckd/src/create_db.c: In function 'transaction_callback':
+/usr/src/wazuh-4.7.2/src/syscheckd/src/create_db.c:315:12: warning: unused variable 'aux' [-Wunused-variable]
+  315 |     cJSON *aux = NULL;
+      |            ^~~
+[ 64%] Building C object CMakeFiles/wazuh-syscheckd.dir/src/run_realtime.c.o
+[ 68%] Building C object CMakeFiles/wazuh-syscheckd.dir/src/syscheck.c.o
+[ 72%] Building C object CMakeFiles/wazuh-syscheckd.dir/src/syscom.c.o
+[ 76%] Building C object CMakeFiles/wazuh-syscheckd.dir/src/whodata/audit_healthcheck.c.o
+[ 80%] Building C object CMakeFiles/wazuh-syscheckd.dir/src/whodata/audit_parse.c.o
+[ 84%] Building C object CMakeFiles/wazuh-syscheckd.dir/src/whodata/audit_rule_handling.c.o
+[ 88%] Building C object CMakeFiles/wazuh-syscheckd.dir/src/whodata/syscheck_audit.c.o
+[ 92%] Building C object CMakeFiles/wazuh-syscheckd.dir/src/whodata/win_whodata.c.o
+[ 96%] Linking C executable bin/wazuh-syscheckd
+[ 96%] Built target wazuh-syscheckd
+[100%] Linking CXX executable ../../../bin/fimdb_test_tool
+[100%] Built target fimdb_test_tool
+make[3]: Leaving directory '/usr/src/wazuh-4.7.2/src/syscheckd/build'
+make[2]: Leaving directory '/usr/src/wazuh-4.7.2/src'
+make settings
+make[2]: Entering directory '/usr/src/wazuh-4.7.2/src'
+Makefile:2515: warning: overriding recipe for target 'win32/ui_resource.o'
+Makefile:2455: warning: ignoring old recipe for target 'win32/ui_resource.o'
+Makefile:2518: warning: overriding recipe for target 'win32/auth_resource.o'
+Makefile:2458: warning: ignoring old recipe for target 'win32/auth_resource.o'
+
+General settings:
+    TARGET:             agent
+    V:                  
+    DEBUG:              
+    DEBUGAD             
+    INSTALLDIR:         
+    DATABASE:           
+    ONEWAY:             no
+    CLEANFULL:          no
+    RESOURCES_URL:      https://packages.wazuh.com/deps/24
+    EXTERNAL_SRC_ONLY:  
+User settings:
+    WAZUH_GROUP:        wazuh
+    WAZUH_USER:         wazuh
+USE settings:
+    USE_ZEROMQ:         no
+    USE_GEOIP:          no
+    USE_PRELUDE:        no
+    USE_INOTIFY:        no
+    USE_BIG_ENDIAN:     no
+    USE_SELINUX:        no
+    USE_AUDIT:          yes
+    DISABLE_SYSC:       no
+    DISABLE_CISCAT:     no
+    IMAGE_TRUST_CHECKS: 1
+    CA_NAME:            DigiCert Assured ID Root CA
+Mysql settings:
+    includes:           
+    libs:               
+Pgsql settings:
+    includes:           
+    libs:               
+Defines:
+    -DOSSECHIDS -DUSER="wazuh" -DGROUPGLOBAL="wazuh" -DLinux -DINOTIFY_ENABLED -D_XOPEN_SOURCE=600 -D_GNU_SOURCE -DIMAGE_TRUST_CHECKS=1 -DCA_NAME='DigiCert Assured ID Root CA' -DENABLE_SYSC -DENABLE_CISCAT -DENABLE_AUDIT -DCLIENT
+Compiler:
+    CFLAGS            -pthread -Iexternal/libdb/build_unix/ -Iexternal/pacman/lib/libalpm/ -Iexternal/libarchive/libarchive -Wl,--start-group -Iexternal/audit-userspace/lib -DNDEBUG -O2 -DOSSECHIDS -DUSER="wazuh" -DGROUPGLOBAL="wazuh" -DLinux -DINOTIFY_ENABLED -D_XOPEN_SOURCE=600 -D_GNU_SOURCE -DIMAGE_TRUST_CHECKS=1 -DCA_NAME='DigiCert Assured ID Root CA' -DENABLE_SYSC -DENABLE_CISCAT -DENABLE_AUDIT -DCLIENT -pipe -Wall -Wextra -std=gnu99 -I./ -I./headers/ -Iexternal/openssl/include -Iexternal/cJSON/ -Iexternal/libyaml/include -Iexternal/curl/include -Iexternal/msgpack/include -Iexternal/bzip2/ -Ishared_modules/common -Ishared_modules/dbsync/include -Ishared_modules/rsync/include -Iwazuh_modules/syscollector/include  -Idata_provider/include  -Iexternal/libpcre2/include -Iexternal/rpm//builddir/output/include -Isyscheckd/include -O2 -pipe -Wall -fexceptions -fPIC -m64 -mtune=generic -fcf-protection=full -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -fstack-protector-strong -fstack-clash-protection
+    LDFLAGS           '-Wl,-rpath,/../lib' -pthread -lrt -ldl -O2 -Lshared_modules/dbsync/build/lib -Lshared_modules/rsync/build/lib  -Lwazuh_modules/syscollector/build/lib -Ldata_provider/build/lib -Lsyscheckd/build/lib
+    LIBS              -lrt -ldl -lm 
+    CC                gcc
+    MAKE              make
+make[2]: Leaving directory '/usr/src/wazuh-4.7.2/src'
+
+Done building agent
+
+make[1]: Leaving directory '/usr/src/wazuh-4.7.2/src'
+cd /usr/src/wazuh-4.7.2 && echo -ne "agent\n" | ./install.sh
+./etc/preloaded-vars.conf: line 158: unexpected EOF while looking for matching `"'
+
+ Wazuh v4.7.2 (Rev. 40711) Installation Script - https://www.wazuh.com
+
+ You are about to start the installation process of Wazuh.
+ You must have a C compiler pre-installed in your system.
+
+  - System: Linux kaliegge 6.6.13-ipfire (ipfire 2.0)
+  - User: root
+  - Host: kaliegge
+
+
+  -- Press ENTER to continue or Ctrl-C to abort. --
+egrep: warning: egrep is obsolescent; using grep -E
+egrep: warning: egrep is obsolescent; using grep -E
+egrep: warning: egrep is obsolescent; using grep -E
+
+1- What kind of installation do you want (manager, agent, local, hybrid or help)? 
+  - Agent (client) installation chosen.
+
+    - Installation will be made at  /var/ipfire/ossec .
+
+3- Configuring Wazuh.
+
+
+  3.2- Do you want to run the integrity check daemon? (y/n) [y]: 
+   - Running syscheck (integrity check daemon).
+
+  3.3- Do you want to run the rootkit detection engine? (y/n) [y]: 
+   - Running rootcheck (rootkit detection).
+
+  3.5 - Do you want to enable active response? (y/n) [y]: 
+   - Active response enabled.
+
+  3.6- Remote upgrades use packages signed by the system maintainer. The
+       corresponding certificate (or root certificate) must be installed
+       in the system in order to verify the WPK packages. By default,
+       the root certificate by Wazuh is installed.
+
+   - Do you want to add more certificates? (y/n)? [n]: 
+  3.7- Setting the configuration to analyze the following logs:
+
+    -- /var/ipfire/ossec/logs/active-responses.log
+    -- /var/log/messages
+    -- /var/log/squid/access.log
+
+ - If you want to monitor any other file, just change
+   the ossec.conf and add a new localfile entry.
+   Any questions about the configuration can be answered
+   by visiting us online at https://documentation.wazuh.com/.
+
+
+   --- Press ENTER to continue ---
+
+4- Installing the system
+
+DIR="/var/ipfire/ossec"
+ - Running the Makefile
+
+Wait for success...
+success
+Removing old SCA policies...
+Installing SCA policies...
+
+
+egrep: warning: egrep is obsolescent; using grep -E
+./src/init/init.sh: line 39: /etc/systemd/system/wazuh-agent.service: No such file or directory
+chown: cannot access '/etc/systemd/system/wazuh-agent.service': No such file or directory
+./src/init/init.sh: line 41: systemctl: command not found
+./src/init/init.sh: line 47: systemctl: command not found
+
+ - Configuration finished properly.
+
+ - To start Wazuh:
+      /var/ipfire/ossec/bin/wazuh-control start
+
+ - To stop Wazuh:
+      /var/ipfire/ossec/bin/wazuh-control stop
+
+ - The configuration can be viewed or modified at /var/ipfire/ossec/etc/ossec.conf
+
+
+   Thanks for using Wazuh.
+   Please don't hesitate to contact us if you need help or find
+   any bugs.
+
+   Use our public Mailing List at:
+          https://groups.google.com/forum/#!forum/wazuh
+
+   More information can be found at:
+          - http://www.wazuh.com
+
+    ---  Press ENTER to finish (maybe more information below). ---
+
+ - More information at: 
+   https://documentation.wazuh.com/
+
+# Install wazuh init script
+install -v -m 754 /usr/src/config/wazuh/wazuh_init /etc/rc.d/init.d/wazuh
+'/usr/src/config/wazuh/wazuh_init' -> '/etc/rc.d/init.d/wazuh'
+Updating linker cache...
+Install done; saving file list to /usr/src/log/wazuh-4.7.2 ...
+

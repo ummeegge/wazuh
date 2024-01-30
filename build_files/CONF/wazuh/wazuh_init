@@ -1,0 +1,87 @@
+#!/bin/sh
+###############################################################################
+#                                                                             #
+# IPFire.org - A linux based firewall                                         #
+# Copyright (C) 2007-2022  IPFire Team  <info@ipfire.org>                     #
+#                                                                             #
+# This program is free software: you can redistribute it and/or modify        #
+# it under the terms of the GNU General Public License as published by        #
+# the Free Software Foundation, either version 3 of the License, or           #
+# (at your option) any later version.                                         #
+#                                                                             #
+# This program is distributed in the hope that it will be useful,             #
+# but WITHOUT ANY WARRANTY; without even the implied warranty of              #
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               #
+# GNU General Public License for more details.                                #
+#                                                                             #
+# You should have received a copy of the GNU General Public License           #
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.       #
+#                                                                             #
+###############################################################################
+
+. /etc/sysconfig/rc
+. ${rc_functions}
+
+# Path
+WAZUHPATH="/var/ipfire/ossec/bin"
+# Colors
+R=$(tput setaf 1)
+G=$(tput setaf 2)
+N=$(tput sgr0)
+
+# Check for installation
+if ! test -f "${WAZUHPATH}/wazuh-control"; then
+	echo "${R}Have not found a Wazuh installation on this system. Need to quit... ${N}"
+	exit 1
+fi
+
+
+case "${1}" in
+	start)
+		boot_mesg "Starting Wazuh agent..."
+		${WAZUHPATH}/wazuh-control start
+		sleep 5
+		if pgrep wazuh >/dev/null; then
+			echo "${G}Wazuh is running... ${N}"
+		else
+			echo "${R}Wazuh is not running... ${N}"
+		fi
+	;;
+
+	stop)
+		if ! pgrep wazuh >/dev/null; then
+			echo "${R}Wazuh is not running... "
+			exit 1
+		fi
+		boot_mesg "Stopping Wazuh agent..."
+		${WAZUHPATH}/wazuh-control stop
+		sleep 5
+		if ! pgrep wazuh >/dev/null; then
+			echo "${R}Wazuh agent has NOT been stopped, please check it by your own... ${N}"
+		else
+			echo "${G}Wazuh has been stopped... ${N}"
+		fi
+	;;
+
+	restart)
+		${0} stop
+		sleep 1
+		${0} start
+	;;
+
+	status)
+		${WAZUHPATH}/wazuh-control status
+	;;
+
+	info)
+		${WAZUHPATH}/wazuh-control info
+	;;
+
+	*)
+		echo "Usage: ${0} {start|stop|restart|status|info}"
+		exit 1
+		;;
+esac
+
+# EOF
+
