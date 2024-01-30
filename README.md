@@ -46,7 +46,9 @@ to install the Wazuh agent execute the install.sh script. After it is finished, 
 $ /etc/init.d/wazuh        
 Usage: /etc/init.d/wazuh {start|stop|restart|status|info}
 ```
-Before you start Wazuh, you need to configure it. The configuration file can be found under /var/ipfire/ossec/etc/ossec.conf. You need to add the IP address of the Wazuh server under the address line "<address>{ENTER_HERE_WAZUH_SERVER_IP}</address>".
+Before you start Wazuh, you need to configure it. The configuration file can be found under /var/ipfire/ossec/etc/ossec.conf. You need to add the IP address of the Wazuh server under the address line
+
+`<address>{ENTER_HERE_WAZUH_SERVER_IP}</address>`
 
 ##Configuration
 
