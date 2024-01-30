@@ -24,7 +24,7 @@ The wazuh_build_log should deliver an overview for potential interested people. 
 ```
 
 
-- If all building files has been placed in the appropriate sections, there is the need to make the first build process to get the base directory in the chroot or ipfire-2.x/build directory. Like above mentioned, [Wazuh needs additional libraries](https://github.com/ummeegge/wazuh/blob/main/build_files/wazuh_build_log#L32) while building it and therefor the IPFire chroot environment needs an DNS resolution to download them via curl. To accomplish this, enter an DNS resolver of your choice under ipfire-2.x/build/etc/resolv.conf . This is not a good practice for the regular build process of IPFire Addons and should be circumvent by build the missing packages regular (own lfsmake) or if present by linking them but it seems that this are modified libraries so it might be problematic even if those libraries are already on the system to use them. May some communication with the Wazu developer brings more light into this.
+- If all building files has been placed in the appropriate sections, there is the need to make the first build process to get the base directory in the chroot or 'ipfire-2.x/build' directory. Like above mentioned, [Wazuh needs additional libraries](https://github.com/ummeegge/wazuh/blob/main/build_files/wazuh_build_log#L32) while building it and therefor the IPFire chroot environment needs an DNS resolution to download them via curl. To accomplish this, enter an DNS resolver of your choice under '*/ipfire-2.x/build/etc/resolv.conf' . This is not a good practice for the regular build process of IPFire Addons and should be circumvent by build the missing packages regular (own lfsmake) or if present by linking them but it seems that these are modified libraries so it might be problematic even if those libraries are already on the system to use them. May some communication with the Wazu developer brings more light into this.
 
 ## Installation
 If the build process is finished a new package and a file has been produced which are located under '*/ipfire-2.x/packages'
@@ -33,14 +33,14 @@ If the build process is finished a new package and a file has been produced whic
 meta-wazuh
 wazuh-4.7.2-1.ipfire
 ```
-at the time of writing this README, the [Wazuh version 4.7.2](https://github.com/wazuh/wazuh/archive/refs/tags/v4.7.2.tar.gz) has been used. Keep in mind to change the b2sum in the LFS if other version should be build. The 'wazuh-4.7.2-1.ipfire' contains all necessary files and also the binary for installation. To install it, take it to '/opt/pakfire/tmp' unpack it via
+at the time of writing this README, the [Wazuh version 4.7.2](https://github.com/wazuh/wazuh/archive/refs/tags/v4.7.2.tar.gz) has been used. Keep in mind to change the b2sum in the LFS if other versions should be build. The 'wazuh-4.7.2-1.ipfire' contains all necessary files and also the binary for installation. To install it, take it to '/opt/pakfire/tmp' unpack it via
 `tar xvf wazuh-4.7.2-1.ipfire`
 so you get all needed files -->
 ```bash
 $ ls /opt/pakfire/tmp      
 files.tar.xz  install.sh  ROOTFILES  uninstall.sh  update.sh  wazuh-4.7.2-1.ipfire
 ```
-to install the Wazuh agent execute the install.sh script. After it is finished, you can find the Wazuh installation under /var/ipfire/ossec. There is also an Sysvinit initscript and the symlinks for system start|stop|reboot are also set so you can use the common Sysvinit way with the following options
+to install the Wazuh agent execute the install.sh script. After it is finished, you can find the Wazuh installation under '/var/ipfire/ossec'. There is also an Sysvinit initscript and the symlinks for the system runlevels start|stop|reboot are also set so you can use the common Sysvinit way with the following options
 
 ```bash
 $ /etc/init.d/wazuh        
@@ -49,21 +49,22 @@ Usage: /etc/init.d/wazuh {start|stop|restart|status|info}
 
 ## Configuration
 
-Before you start Wazuh, you need to configure it. The configuration file can be found under /var/ipfire/ossec/etc/ossec.conf. You need to add the IP address of the Wazuh server under the address line
+Before you start Wazuh, you need to configure it. The configuration file can be found under '/var/ipfire/ossec/etc/ossec.conf'. You need to add the IP address of the Wazuh server under the address line
 
 `<address>{ENTER_HERE_WAZUH_SERVER_IP}</address>`
 
-### Generate and add the agent key:
+### Generate and add the agent key
 
-To building up an encrypted connection between the Wazuh agent on IPFire and the Wazuh server to transfer the data, a client key needs to be created on server side and imported to the agent. This can be done via the 'manage_agents' binary which can be found on IPFire agent under /var/ipfire/ossec/bin and on der Wazuh server under /var/ossec/bin . This process is quite simple and looks like this -->
+To building up an encrypted connection between the Wazuh agent on IPFire and the Wazuh server to have a secure transfer of the data, a client key needs to be created on server side and needs then to be imported to the agent (copy/paste). This can be done via the 'manage_agents' binary which can be found on IPFire agent under '/var/ipfire/ossec/bin' and on der Wazuh server under '/var/ossec/bin' . This process is simple and looks like this -->
 
 Wazuh server:
 * Login via ssh
-* Become root via interactive shell (sudo -s)
-* Go to /bin directory
+* Become root with an interactive shell (sudo -s)
+* Go to '/var/ossec/bin'
 * Execute manage_agents
 * Add new agent
 * Generate agent key
+
 ```bash
 $ ssh wazuh-user@192.168.7.5
 The authenticity of host '192.168.7.5 (192.168.7.5)' can't be established.
@@ -192,7 +193,7 @@ manage_agents: Exiting.
 
 
 
-### Restart Wazuh agent:
+### Restart Wazuh agent
 After all changes has been done
 
 * Add IP from Wazuh server into /var/ipfire/ossec/etc/ossec.conf
@@ -214,7 +215,18 @@ Completed.
 Wazuh is running...
 ```
 
-### Check on Wazuh server side if specific agent is active
+You can also use process state on IPFire to overview the running processes via
+
+```bash
+$ ps aux | grep -v grep | grep wazuh
+root      1803  0.0  0.1  21800  3012 ?        Sl   12:00   0:00 /var/ipfire/ossec/bin/wazuh-execd
+wazuh     1812  0.1  0.3 243516  7716 ?        Sl   12:00   0:07 /var/ipfire/ossec/bin/wazuh-agentd
+root      1827  0.8  0.6 330560 13716 ?        SNl  12:00   0:35 /var/ipfire/ossec/bin/wazuh-syscheckd
+root      1841  0.1  0.2 464200  5648 ?        Sl   12:00   0:05 /var/ipfire/ossec/bin/wazuh-logcollector
+root      1854  0.0  0.8 796696 17320 ?        Sl   12:00   0:01 /var/ipfire/ossec/bin/wazuh-modulesd
+```
+
+### Check on Wazuh server side if a specific agent is active
 Wazuh server offers also via CLI a possibility to get informations about an specific agent. Via
 `/var/ossec/bin/agent_control -i {AGENT_ID}`
 beneath some other informations, the status can be checked and should looks similar to this.
@@ -237,5 +249,18 @@ Wazuh agent_control. Agent information:
 ```
 
 
-That´s all check you Wazuh server webinterface for the newely added IPFire agent.
+That´s all check out your Wazuh server webinterface for the newely added IPFire agent.
+
+## Uninstallation
+
+The uninstallation can also be done via [uninstall.sh](https://github.com/ummeegge/wazuh/blob/main/build_files/PAKS/wazuh/uninstall.sh) which removes not only all added files but also the created user 'wazuh' and the group 'wazuh'. Since all logs a stored under '/var/ipfire/ossec/logs' and not under messages, it makes no sense to keep the user and group. uninstall.sh also deletes the added symlinks for the initscript.
+The uninstall.sh script is, like install.sh, located in the wazuh IPFire package so it makes sense to keep thisd package also after installation.
+
+## Update
+
+There is also an update.sh available which should keep the keys and the configuration file but this should be better tested!!!
+
+
+
+
 
