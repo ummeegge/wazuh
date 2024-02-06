@@ -47,7 +47,7 @@ $ /etc/init.d/wazuh
 Usage: /etc/init.d/wazuh {start|stop|restart|status|info}
 ```
 
-## Configuration
+## Initial Configuration
 
 Before you start Wazuh, you need to configure it. The configuration file can be found under '/var/ipfire/ossec/etc/ossec.conf'. You need to add the IP address of the Wazuh server under the address line
 
@@ -251,10 +251,79 @@ Wazuh agent_control. Agent information:
 
 That´s all check out your Wazuh server webinterface for the newely added IPFire agent.
 
+## Extented configuration
+
+- Suricata log processing:
+Since IPFire have also Suricata as an IPS in the core system available, it is also possible to use it with Wazuh by configuring the client appropriately. Since Wazuh uses therefor the "Extensible Event Format (nicknamed EVE)" which read the logs messages in JSON format but Suricata on IPFire uses per default only the fast.log method, there is the need to modify
+1) Suricata´s configuration file
+2) Add Suricatas log file to the Wazuh configuration to read it out.
+
+NOTE: In might be helpful to make backup´s of all modified configuration files!!!
+
+Suricata modifcation takes place under /etc/suricata/suricata.yaml and looks like this
+```bash
+--- /etc/suricata/suricata.yaml_orig	2024-02-06 15:31:28.116742725 +0100
++++ /etc/suricata/suricata.yaml	2023-12-05 12:50:48.502812889 +0100
+@@ -93,7 +93,7 @@
+ 
+   # Extensible Event Format (nicknamed EVE) event log in JSON format
+   - eve-log:
+-      enabled: no
++      enabled: yes
+       filetype: regular #regular|syslog|unix_dgram|unix_stream|redis
+       filename: eve.json
+       #prefix: "@cee: " # prefix to prepend to each log entry
+```
+and after restarting Suricata with an
+`/etc/init.d/suricata restart`
+the new log file can be found under "/var/log/suricata/eve.json"
+
+NOTE !!! To prevent a high amount of log data it might be good to add a logrotate file for the Suricata eve logs which can be done under "/etc/logrotate.d/" by the name of e.g. 'suricata_eve' with the following content
+```bash
+# Suricata additional eve.json log for Wauzh
+/var/log/suricata/*.json {
+    weekly
+    copytruncate
+    compress
+    ifempty
+    missingok
+    postrotate
+	/bin/find /var/log/suricata -path '/var/log/suricata/[0-9]*' -prune -exec /bin/rm -rf {} \;
+	/bin/find /var/log/suricata -name 'eve.json.*' -mtime +28 -exec /bin/rm -rf {} \;
+	/bin/kill -HUP `cat /var/run/suricata.pid 2> /dev/null` 2> /dev/null || true
+    endscript
+}
+```
+
+The modifiacation on Wazuh on agent side takes place under "/var/ipfire/ossec/etc/ossec.conf" whereby the new log file needs to be integrated which looks like this
+
+```bash
+--- /var/ipfire/ossec/etc/ossec.conf_first_install	2024-02-06 15:27:18.110379152 +0100
++++ /var/ipfire/ossec/etc/ossec.conf	2024-02-06 15:29:35.172933422 +0100
+@@ -158,6 +158,11 @@
+   </localfile>
+ 
++   <localfile>
++    <log_format>json</log_format>
++    <location>/var/log/suricata/eve.json</location>
++  </localfile>
++
+   <localfile>
+     <log_format>command</log_format>
+     <command>df -P</command>
+     <frequency>360</frequency>
+```
+
+and by restarting Wazuh via
+`/etc/init.d/wazuh restart`
+the ossec.log should lines also out that the "wazuh-logcollector" analyzes also the eve.json log from Suricata e.g. 
+`2024/02/06 15:46:42 wazuh-logcollector: INFO: (1950): Analyzing file: '/var/log/suricata/eve.json'.`
+
+
 ## Uninstallation
 
-The uninstallation can also be done via [uninstall.sh](https://github.com/ummeegge/wazuh/blob/main/build_files/PAKS/wazuh/uninstall.sh) which removes not only all added files but also the created user 'wazuh' and the group 'wazuh'. Since all logs a stored under '/var/ipfire/ossec/logs' and not under messages, it makes no sense to keep the user and group. uninstall.sh also deletes the added symlinks for the initscript.
-The uninstall.sh script is, like install.sh, located in the wazuh IPFire package so it makes sense to keep thisd package also after installation.
+The uninstallation can also be done via [uninstall.sh](https://github.com/ummeegge/wazuh/blob/main/build_files/PAKS/wazuh/uninstall.sh) which removes not only all added files but also the created user and group 'wazuh'. Since all logs are stored under "/var/ipfire/ossec/logs" and not under messages, it makes no sense to keep the user and group. uninstall.sh also deletes the added symlinks for the initscript.
+The uninstall.sh script is, like install.sh, located in the wazuh IPFire package so it makes sense to keep this package also after installation.
 
 ## Update
 
